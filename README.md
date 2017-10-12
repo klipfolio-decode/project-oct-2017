@@ -9,6 +9,7 @@
 2) npm install
 3) npm run watchjs (this build your js files using webpack and watch for changes)
 4) npm start
+5) Go to `http://localhost:3000/` in your browser
 
 ## Git Tutorial/Cheat Sheet
 https://www.youtube.com/watch?v=0fKg7e37bQE
@@ -41,6 +42,9 @@ Once the review is approved, Merge it!
 * npm install --save `package-name` - Installs the NPM package and saves the new entry in `package.json` so that others can do NPM install and pick up new dependencies
 * npm run watchjs - Runs the webpack build for your JS files and rebuilds every time a file is changed. If this is not running, your changes will not be visible when you refresh the page.
 * npm start - Starts the app on the configured port
+
+## ChartJS Docs
+http://www.chartjs.org/docs/latest/
 
 ## Query Examples
 https://docs.google.com/document/d/1SOAkSfL-Ni6StNchDHzWbHcP30l58uKoujuzBO0squs/edit?usp=sharing

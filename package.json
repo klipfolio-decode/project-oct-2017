@@ -1,0 +1,39 @@
+{
+  "name": "project-oct-2017",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "babel --presets es2015 www/js/index.js -o build/bundle.js",
+    "webpack": "webpack",
+    "watchjs": "npm run webpack -- --watch",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klipfolio-decode/project-oct-2017.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/klipfolio-decode/project-oct-2017/issues"
+  },
+  "homepage": "https://github.com/klipfolio-decode/project-oct-2017#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chart.js": "^2.7.0",
+    "express": "^4.16.1",
+    "fs": "0.0.1-security",
+    "jquery": "^3.2.1",
+    "net": "^1.0.2",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5",
+    "tls": "0.0.1"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.2",
+    "webpack": "^3.6.0"
+  }
+}

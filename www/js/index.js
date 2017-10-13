@@ -1,13 +1,26 @@
 import $ from "jquery";
 
 import * as viz from "./visualizations";
+import * as firebase from "firebase";
+import config from "../../config.json";
 
-const targetDivId = "container";
-const targetDiv = document.createElement("div");
-$(targetDiv)
-    .attr("id", targetDivId)
-    .html("hello")
-    .appendTo(document.body);
+// Initialize Firebase
+firebase.initializeApp(config.firebase);
 
-viz.renderChart("myChart");
-viz.renderTo(targetDivId);
+var database = firebase.database();
+var nameRef = database.ref().child('data');
+
+nameRef.on('value', snap => {
+  viz.renderAll(snap.val())
+});
+
+function render(){
+	viz.renderChart("visualizationContainer", mockData.visualizations[0]);
+}
+
+const addChartButton = document.createElement("button")
+$(addChartButton)
+	.attr("id", "button1")
+	.html("Add Chart")
+	.appendTo(document.body)
+	.click(render);

@@ -1,6 +1,60 @@
 import $ from "jquery";
 import Chart from "chart.js";
 
+var mockData = {
+    "visualizations": [
+        {
+            "id": "1",
+            "type": "line",
+            "label": "name",
+            "data":{
+                "labels": ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                "datasets": [{
+                    "label": "# of Votes",
+                    "data": [12, 19, 3, 5, 2, 3],
+                    "borderColor": [
+                        "rgba(255,99,132,1)"],
+                    "borderWidth": 1
+                },{
+                    "label": "# of Whatever;",
+                    "data": [11, 18, 2, 4, 1, 2],
+                    "borderColor": [
+                        "rgba(255,99,132,1)"],
+                    "borderWidth": 1
+                }]
+            }
+        },
+        {
+            "id": "2",
+            "type": "line",
+            "label": "name2",
+            "data":{
+                "labels": ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                "datasets": [{
+                    "label": "# of Votes",
+                    "data": [5, 12, 10, 1, 26, 3],
+                    "borderColor": [
+                        "rgba(255,99,132,1)"],
+                    "borderWidth": 1
+                },{
+                    "label": "# of Whatever;",
+                    "data": [11, 18, 2, 4, 1, 2],
+                    "borderColor": [
+                        "rgba(255,99,132,1)"],
+                    "borderWidth": 1
+                }]
+            }
+        }
+    ]};
+
+export function renderAll(data){
+    $("#visualizationContainer").html("")
+
+    data.visualizations.forEach(function(visualization){
+        renderChart("visualizationContainer", visualization);
+    })
+}
+
 export function renderTo(target) {
     $.get("/api/visualizations")
     .done(function(res) {
@@ -11,36 +65,13 @@ export function renderTo(target) {
     });
 };
 
-export function renderChart(target) {
+export function renderChart(target, visualization) {
     var canvas = $("<canvas>");
 
     var context = canvas.get(0).getContext("2d");
     var myChart = new Chart(context, {
-        type: 'bar',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: 'Chart Example',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
+        type: visualization.type,
+        data: visualization.data,
         options: {
             scales: {
                 yAxes: [{
@@ -52,5 +83,5 @@ export function renderChart(target) {
         }
     });
 
-    canvas.appendTo(document.body)
+    canvas.appendTo($("#" + target))
 }

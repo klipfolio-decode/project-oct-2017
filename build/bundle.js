@@ -27348,7 +27348,7 @@ var _chart2 = _interopRequireDefault(_chart);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function renderTo(target) {
-    _jquery2.default.get("/visualizations").done(function (res) {
+    _jquery2.default.get("/api/visualizations").done(function (res) {
         (0, _jquery2.default)("#" + target).html("Request response: " + JSON.stringify(res));
     }).fail(function (err) {
         console.log("error: ", err);

@@ -1,8 +1,8 @@
+const config = require("../config.json")
 const admin = require("firebase-admin");
 const serviceAccount = config.firebase_admin;
 const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
 const request = require("async-request")
-const config = require("../config.json")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

@@ -18,3 +18,10 @@ module.exports.getAllMetrics = async (req, res) => {
 		res.status(500).send(err)
 	}
 }
+
+module.exports.getMetricByName = async (req, res) => {
+	let metricId = await dataService.getMetricByName(req.query.name)
+	res.status(200).json({
+		'metricId': metricId
+	})
+}

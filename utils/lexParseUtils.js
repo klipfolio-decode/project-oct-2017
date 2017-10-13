@@ -8,7 +8,6 @@ module.exports.getRange = (rangeResponse) => {
     } else if (rangeResponse.contains('from')) {
 
     }
-    if(rangeResponse.contains)
 }
 
 module.exports.getDimensionType = (dimensionTypeResponse) => {
@@ -16,7 +15,7 @@ module.exports.getDimensionType = (dimensionTypeResponse) => {
       return "d4b04ded4b32361ef6484773c515aad5"
     }
   }
-  
+
 module.exports.getDimension = (dimensionResponse) => {
     if(dimensionResponse){
       let dimensionArray = possibleDimensions.filter(dimen => dimensionResponse.contains(dimen))

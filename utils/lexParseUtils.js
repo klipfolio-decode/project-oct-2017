@@ -2,13 +2,10 @@ const possibleDimensions = ['friend', 'family', 'stranger']
 
 
 module.exports.getRange = (rangeResponse) => {
-    let startRange
-    if (rangeResponse.contains('last') || rangeResponse.contains('past')){
-        startRange = 'now'
-    } else if (rangeResponse.contains('from')) {
-
-    }
-    if(rangeResponse.contains)
+  let startRange
+  let regex = /([A-Za-z ]*)(\d*)( [A-Za-z]+)/
+  let [sign, period, unit] = rangeResponse.match(regex).slice(1, 4)
+  startRange = sign.includes('last') || sign.includes('past') ? 'now' : 'next'
 }
 
 module.exports.getDimensionType = (dimensionTypeResponse) => {

@@ -90,7 +90,6 @@
 
     var Sending = function(state) {
       console.log("Sending");
-      debugger;
       this.state = state;
       state.message = state.messages.SENDING;
       this.advanceConversation = function() {
@@ -135,6 +134,12 @@
             userId: 'svrk8aedlgyokzngyrldrgx2kwade1l1',
             accept: 'audio/mpeg'
           };
+          var AWSConfig = new AWS.CognitoIdentityCredentials({IdentityPoolId:'us-east-1:6a5cf4b0-5e5c-4f5d-b5bd-d66dea8de13c'});
+            AWS.config.update({
+              credentials: AWSConfig,
+              region: 'us-east-1'
+            });
+            lexruntime = new AWS.LexRuntime();
           conversation.advanceConversation();
         };
       } else {

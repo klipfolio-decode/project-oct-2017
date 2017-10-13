@@ -24,3 +24,7 @@ $(addChartButton)
 	.html("Add Chart")
 	.appendTo(document.body)
 	.click(render);
+
+if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);
+else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));
+else window.onload = new lexaudio.example();

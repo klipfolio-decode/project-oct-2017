@@ -8,4 +8,6 @@ app.get("/metrics", dataController.getAllMetrics)
 
 app.get("/getMetricByName", dataController.getMetricByName)
 
+app.get("/test", dataController.test)
+
 module.exports = app

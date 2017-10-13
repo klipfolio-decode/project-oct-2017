@@ -1,6 +1,15 @@
-const request = require("async-request")
 const config = require("../config.json")
+const admin = require("firebase-admin");
+const serviceAccount = config.firebase_admin;
 const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
+const request = require("async-request")
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://klipfolio-e40dd.firebaseio.com"
+});
+
+const db = admin.database().ref('/')
 
 module.exports.getAllMetrics = async () => {
     let res = await request(endpoint, {
@@ -45,6 +54,11 @@ module.exports.runQuery = async (metricId, query) => {
         throw new Error(`${endpoint} responded with ${res.statusCode}`)
 
     return JSON.parse(res.body)
+}
+
+module.exports.exportToFirebase = async (data) => {
+    var test_data = db.child('test-data')
+    test_data.set(data)
 }
 
 module.exports.get = () => {

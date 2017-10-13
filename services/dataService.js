@@ -1,7 +1,8 @@
-const request = require("async-request");
-const config = require("../config.json");
 const admin = require("firebase-admin");
 const serviceAccount = config.firebase_admin;
+const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
+const request = require("async-request")
+const config = require("../config.json")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -9,7 +10,6 @@ admin.initializeApp({
 });
 
 module.exports.getAllMetrics = async () => {
-    const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
     let res = await request(endpoint, {
         method: 'GET',
         headers: {
@@ -35,6 +35,23 @@ module.exports.getMetricByName = async (metricName = 'Likes') => {
         }
     }
     return -1
+}
+
+module.exports.runQuery = async (metricId, query) => {
+    const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
+    let res = await request(`${endpoint}/${metricId}/values?q=${query}`, {
+        method: 'GET',
+        headers: {
+            'company-id': '1a6786090f557ec5774da0d71adbddef',
+            'kf-api-key': '53b9c1eac8cc70b5c795a5578730037673c4ccbe',
+            'Content-Type': 'application/json'
+        }
+    })
+
+    if (res.statusCode !== 200)
+        throw new Error(`${endpoint} responded with ${res.statusCode}`)
+
+    return JSON.parse(res.body)
 }
 
 module.exports.get = () => {

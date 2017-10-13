@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const config = require("./config.json");
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 // set up static routes
 app.use(express.static("./www/html"));

@@ -3,6 +3,7 @@ const admin = require("firebase-admin");
 const serviceAccount = config.firebase_admin;
 const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
 const request = require("async-request")
+const dataManipulation = require("../utils/dataManipulation.json")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -58,7 +59,7 @@ module.exports.runQuery = async (metricId, query) => {
 
 module.exports.exportToFirebase = async (data) => {
     var test_data = db.child('test-data')
-    test_data.set(data)
+    test_data.set(dataManipulation.map(data))
 }
 
 module.exports.get = () => {

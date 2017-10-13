@@ -25,3 +25,10 @@ module.exports.getMetricByName = async (req, res) => {
 		'metricId': metricId
 	})
 }
+
+module.exports.test = async (req, res) => {
+	let data = await dataService.runQuery('748a65637ad59980a7f9151e2bc12e6f', '{periodicity:1d,range:now-7d,aggregation:sum}')
+	res.status(200).json({
+		'data': data
+	})
+}

@@ -4,4 +4,6 @@ var visualizations = require("./api/visualizations");
 
 app.get("/visualizations", dataController.getVisualizations);
 
+app.get("/metrics", dataController.getAllMetrics)
+
 module.exports = app

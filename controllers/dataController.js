@@ -3,24 +3,18 @@ const lexUtils = require("../utils/lexParseUtils")
 const config = require("../config.json")
 
 module.exports.getVisualizations = async (req, res) => {
-  console.log(req.body)
-  console.log(req.body.slots.metric)
   let metric = req.body["slots"]["metric"]
-  console.log("METRIC: " +metric)
   try{
-  let metricId = await dataService.getMetricByName(metric) 
-  console.log("Metric id", metricId)
-  let aggregation = null
-  let periodicity = null
-  let range = lexUtils.getRange(res.body.slots.period)
-  console.log("1")
-  let groupby = lexUtils.getDimensionType(res.body.slots.dimensionType)
-  console.log("2")
-  let filter = lexUtils.getDimension(res.body.slots.dimension)
-  console.log("3")
-  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
-  console.log("QUERY: "+query)
-  // res.status(200).json(dataService.runQuery(metricId, query))
+	  let metricId = await dataService.getMetricByName(metric)
+	  let aggregation = null
+	  let periodicity = null
+
+	  let range = lexUtils.getRange(req.body.slots.period)
+	  let groupby = lexUtils.getDimensionType(req.body.slots.dimensionType)
+	  let filter = lexUtils.getDimension(req.body.slots.dimension)
+	  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
+	  let data = await dataService.runQuery(metricId, query)
+	  res.status(200).json(data)
   } catch(err){
     res.status(500).send(err)
   }

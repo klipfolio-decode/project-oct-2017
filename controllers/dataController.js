@@ -16,6 +16,7 @@ module.exports.getVisualizations = async (req, res) => {
 	  let data = await dataService.runQuery(metricId, query)
 	  res.status(200).json(data)
   } catch(err){
+    console.error(err)
     res.status(500).send(err)
   }
 }

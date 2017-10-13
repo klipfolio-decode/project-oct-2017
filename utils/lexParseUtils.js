@@ -2,6 +2,7 @@ const possibleDimensions = ['friend', 'family', 'stranger']
 
 
 module.exports.getRange = (rangeResponse) => {
+  if(rangeResponse){
   let startRange
   let regex = /([A-Za-z ]*)(\d*)( [A-Za-z]+)/
   let [sign, period, unit] = rangeResponse.match(regex).slice(1, 4).map(
@@ -9,6 +10,7 @@ module.exports.getRange = (rangeResponse) => {
   )
   startRange = sign.includes('last') || sign.includes('past') ? 'now' : 'next'
   return `${startRange}-${period}${unit[0]}`
+}
 }
 
 module.exports.getDimensionType = (dimensionTypeResponse) => {
@@ -18,7 +20,7 @@ module.exports.getDimensionType = (dimensionTypeResponse) => {
 }
 
 
-  module.exports.getQuery = (aggregation,periodicity,range,groupby,filter) => {
+  module.exports.getQuery = (aggregation,periodicity = "1d",range,groupby,filter) => {
     let queryString = "{"
     if(aggregation){
       queryString+="aggregation:"+aggregation+","

@@ -1,5 +1,12 @@
-const request = require("async-request")
-const config = require("../config.json")
+const request = require("async-request");
+const config = require("../config.json");
+const admin = require("firebase-admin");
+const serviceAccount = config.firebase_admin;
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://klipfolio-e40dd.firebaseio.com"
+});
 
 module.exports.getAllMetrics = async () => {
     const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`

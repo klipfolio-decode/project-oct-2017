@@ -27,8 +27,13 @@ module.exports.getMetricByName = async (req, res) => {
 }
 
 module.exports.test = async (req, res) => {
-	let data = await dataService.runQuery('748a65637ad59980a7f9151e2bc12e6f', '{periodicity:1d,range:now-7d,aggregation:sum}')
-	res.status(200).json({
-		'data': data
-	})
+	try {
+		let data = await dataService.runQuery('748a65637ad59980a7f9151e2bc12e6f', '{periodicity:1d,range:now-7d,aggregation:sum}')
+		await dataService.exportToFirebase(data)
+		res.status(200).json({
+			'data': data
+		})
+	} catch (err) {
+		res.status(500).send(err)
+	}
 }

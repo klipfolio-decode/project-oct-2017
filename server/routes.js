@@ -6,4 +6,6 @@ app.get("/visualizations", dataController.getVisualizations);
 
 app.get("/metrics", dataController.getAllMetrics)
 
+app.get("/getMetricByName", dataController.getMetricByName)
+
 module.exports = app

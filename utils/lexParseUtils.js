@@ -21,20 +21,21 @@ module.exports.getDimensionType = (dimensionTypeResponse) => {
   module.exports.getQuery = (aggregation,periodicity,range,groupby,filter) => {
     let queryString = "{"
     if(aggregation){
-      queryString+="aggregation:"+aggregation
+      queryString+="aggregation:"+aggregation+","
     }
     if(periodicity) {
-      queryString+="periodicity:"+periodicity
+      queryString+="periodicity:"+periodicity+","
     }
     if(range) {
-      queryString+="range:"+range
+      queryString+="range:"+range+","
     }
     if(groupby) {
-      queryString+="groupby:"+groupby
+      queryString+="groupby:"+groupby+","
     }
     if(filter) {
-      queryString+="filter:"+filter
+      queryString+="filter:d4b04ded4b32361ef6484773c515aad5=("+filter.toString()+")"
     }
+    console.log(queryString)
     return encodeURIComponent(queryString+"}")
   }
   

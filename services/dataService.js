@@ -18,6 +18,18 @@ module.exports.getAllMetrics = async () => {
     return JSON.parse(res.body)
 }
 
+module.exports.getMetricByName = async (metricName = 'Likes') => {
+    metricName = metricName.toLowerCase()
+    let res = await this.getAllMetrics()
+    let metrics = res['metrics']
+    for (var i in metrics) {
+        if(metrics[i]['name'].indexOf(metricName) !== -1) {
+            return metrics[i]['publicId']
+        }
+    }
+    return -1
+}
+
 module.exports.get = () => {
     return {
         visualizations: [

@@ -1,13 +1,25 @@
 const dataService = require('../services/dataService')
 const lexUtils = require("../utils/lexParseUtils")
+const config = require("../config.json")
 
-module.exports.getVisualizations = (req, res) => {
-  let aggregation = null
-  let periodicity = null
-  let range = lexUtils.getRange(res.slot.period)
-  let groupby = lexUtils.getDimensionType(res.slot.dimensionType)
-  let filter = lexUtils.getDimension(res.slot.dimension)
-	res.status(200).json(dataService.get())
+module.exports.getVisualizations = async (req, res) => {
+  let metric = req.body["slots"]["metric"]
+  try{
+	  let metricId = await dataService.getMetricByName(metric)
+	  let aggregation = null
+	  let periodicity = "1d"
+
+	  let range = lexUtils.getRange(req.body.slots.period)
+	  let groupby = lexUtils.getDimensionType(req.body.slots.dimensionType)
+	  let filter = lexUtils.getDimension(req.body.slots.dimension)
+	  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
+	  console.log(query)
+	  let data = await dataService.runQuery(metricId, query)
+	  res.status(200).json(data)
+  } catch(err){
+    console.error(err)
+    res.status(500).send(err)
+  }
 }
 
 module.exports.getAllMetrics = async (req, res) => {

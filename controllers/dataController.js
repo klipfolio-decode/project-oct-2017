@@ -9,8 +9,8 @@ module.exports.getVisualizations = (req, res) => {
   let range = lexUtils.getRange(res.slot.period)
   let groupby = lexUtils.getDimensionType(res.slot.dimensionType)
   let filter = lexUtils.getDimension(res.slot.dimension)
-  lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
-	res.status(200).json(dataService.get())
+  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
+	res.status(200).json(dataService.runQuery(metricId, query))
 }
 
 module.exports.getAllMetrics = async (req, res) => {

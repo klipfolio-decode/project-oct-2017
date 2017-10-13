@@ -1,6 +1,5 @@
 var app = require("express").Router()
 const dataController = require('../controllers/dataController')
-var visualizations = require("./api/visualizations");
 
 app.post("/visualizations", dataController.getVisualizations);
 

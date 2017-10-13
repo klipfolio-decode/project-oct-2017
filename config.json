@@ -1,3 +1,11 @@
 {
-    "port": 3000
+    "port": 3000,
+    "firebase": {
+	  "apiKey": "AIzaSyAGUD_dENazGQje5TVhCe7pAqf4YlaNgOA",
+	  "authDomain": "klipfolio-e40dd.firebaseapp.com",
+	  "databaseURL": "https://klipfolio-e40dd.firebaseio.com",
+	  "projectId": "klipfolio-e40dd",
+	  "storageBucket": "",
+	  "messagingSenderId": "269386088678"
+	}
 }

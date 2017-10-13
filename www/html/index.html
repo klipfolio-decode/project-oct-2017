@@ -1,8 +1,29 @@
 <html>
     <head>
         <title>Decode Oct 2017</title>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <div class="audio-control">
+            <p id="audio-control" class="white-circle">
+                <img src="images/lex.png">
+                <canvas class="visualizer"></canvas>
+            </p>
+            <p><span id="message"></span></p>
+        </div>
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.48.0.min.js"></script>
+        <script type="text/javascript">
+        window.lexaudio = {};
+        </script>
+        <script src="js/control.js" type="text/javascript"></script>
+        <script src="js/recorder.js" type="text/javascript"></script>
+        <script src="js/renderer.js" type="text/javascript"></script>
+        <script src="js/conversation.js" type="text/javascript"></script>
         <script src="./build/bundle.js"></script>
+        <script type="text/javascript">
+            if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);
+            else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));
+            else window.onload = new lexaudio.example();
+        </script>
     </body>
 </html>

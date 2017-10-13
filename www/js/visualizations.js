@@ -2,7 +2,7 @@ import $ from "jquery";
 import Chart from "chart.js";
 
 export function renderTo(target) {
-    $.get("/visualizations")
+    $.get("/api/visualizations")
     .done(function(res) {
         $("#" + target).html("Request response: " + JSON.stringify(res));
     })

@@ -125,8 +125,10 @@
     audioControl.supportsAudio(function(supported) {
       if (supported) {
         var conversation = new Conversation(message);
+        console.log("before CLicked");
         message.textContent = conversation.message;
         document.getElementById('audio-control').onclick = function() {
+          console.log("clicked");
           params = {
             botAlias: '$LATEST',
             botName: 'decode',

@@ -120,11 +120,21 @@
      */
     var supportsAudio = function(callback) {
       if (navigator.mediaDevices.getUserMedia) {
+        console.log("in if block");
         audioRecorder = lexaudio.audioRecorder();
         audioRecorder.requestDevice()
-          .then(function(stream) { callback(true); })
-          .catch(function(error) { callback(false); });
+          .then(function(stream)
+          {
+            console.log("requestDevice: true");
+            callback(true);
+          })
+          .catch(function(error)
+          {
+            console.log("requestDevice: false");
+            callback(false);
+          });
       } else {
+        console.log("Else block false");
         callback(false);
       }
     };

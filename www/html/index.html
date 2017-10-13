@@ -84,7 +84,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												<span class="m-nav__link-badge m-badge m-badge--dot m-badge--info m--hide"></span>
 												<span class="m-nav__link-icon">
 													<span class="m-nav__link-icon-wrapper">
-														<i class="fa fa-microphone"></i>
+														<i class="fa fa-microphone" id="audio-control"></i>
 													</span>
 												</span>
 											</a>
@@ -101,12 +101,17 @@ License: You must have a valid license purchased only from themeforest(the above
 															<div class="m-scrollable" data-scrollable="false" data-max-height="380" data-mobile-max-height="200">
 																<div class="m-nav-grid m-nav-grid--skin-light">
 																	<div class="m-nav-grid__row">
-																		<a href="#" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon fa-spin fa fa-spinner"></i>
-																			<span class="m-nav-grid__text">
-																				Receiving Command
-																			</span>
-																		</a>
+
+                                                                        <!-- Begin Waveform Container -->
+                                                                        <div class="audio-control" style="width:100% !important; height:100% !important">
+                                                                            <p id="audio-control" class="white-circle">
+                                                                                <img src="images/lex.png">
+                                                                                <canvas class="visualizer"></canvas>
+                                                                            </p>
+                                                                            <p><span id="message"></span></p>
+                                                                        </div>
+                                                                        <!-- End Waveform Container -->
+
 																	</div>
 																</div>
 															</div>
@@ -1097,7 +1102,15 @@ License: You must have a valid license purchased only from themeforest(the above
 					</div>
 				</div>
 			</div>
-		</div>
+        </div>
+
+        <!-- <div class="audio-control">
+                            <p id="audio-control" class="white-circle">
+                                <img src="images/lex.png">
+                                <canvas class="visualizer"></canvas>
+                            </p>
+                            <p><span id="message"></span></p>
+                        </div> -->
 		<!-- end::Quick Sidebar -->
 		<!-- begin::Scroll Top -->
 		<div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500" data-scroll-speed="300">
@@ -1141,16 +1154,15 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--begin::Page Snippets -->
 		<script src="assets/app/js/dashboard.js" type="text/javascript"></script>
         <!--end::Page Snippets -->
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.48.0.min.js"></script>
+        <script>
+            window.lexaudio = {};
         </script>
         <script src="js/control.js" type="text/javascript"></script>
         <script src="js/recorder.js" type="text/javascript"></script>
         <script src="js/renderer.js" type="text/javascript"></script>
         <script src="js/conversation.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);
-            else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));
-            else window.onload = new lexaudio.example();
-        </script>
+        <script src="./build/bundle.js"></script>
 	</body>
 	<!-- end::Body -->
 </html>

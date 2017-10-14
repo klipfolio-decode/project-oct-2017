@@ -27,10 +27,22 @@ export function renderChart(target, visualization) {
         type: visualization.type,
         data: visualization.data,
         options: {
+            title: {
+                display: true,
+                text: visualization.options.title.text
+            },
             scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero:true
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        callback: function(value) {
+                            var date = new Date(value);
+                            return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear().toString().slice(2);
+                        }
                     }
                 }]
             }
@@ -53,6 +65,7 @@ export function renderCard(visualization){
 
     var portletHead = $("<div>");
     portletHead.attr("class", "m-portlet__head");
+
     portletTools3.append(portletHead);
 
     var mPortletHeadCaption = $("<div>");

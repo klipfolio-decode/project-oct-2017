@@ -40712,8 +40712,14 @@ nameRef.on('value', function (snap) {
 	viz.renderAll(snap.val());
 });
 
-var addChartButton = document.createElement("button");
-(0, _jquery2.default)(addChartButton).attr("id", "button1").html("Add Chart").appendTo(document.body);
+/*
+const addChartButton = document.createElement("button")
+$(addChartButton)
+	.attr("id", "button1")
+	.html("Add Chart")
+	.appendTo(document.body);
+
+	*/
 
 if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));else window.onload = new lexaudio.example();
 
@@ -40772,6 +40778,14 @@ function renderChart(target, visualization) {
                     ticks: {
                         beginAtZero: true
                     }
+                }],
+                xAxes: [{
+                    ticks: {
+                        callback: function callback(value) {
+                            var date = new Date(value);
+                            return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear().toString().slice(2);
+                        }
+                    }
                 }]
             }
         }
@@ -40789,6 +40803,7 @@ function renderCard(visualization) {
 
     var portletHead = (0, _jquery2.default)("<div>");
     portletHead.attr("class", "m-portlet__head");
+
     portletTools3.append(portletHead);
 
     var mPortletHeadCaption = (0, _jquery2.default)("<div>");

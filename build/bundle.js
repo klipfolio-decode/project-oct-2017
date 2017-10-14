@@ -40803,6 +40803,7 @@ function renderCard(visualization) {
 
     var portletHead = (0, _jquery2.default)("<div>");
     portletHead.attr("class", "m-portlet__head");
+
     portletTools3.append(portletHead);
 
     var mPortletHeadCaption = (0, _jquery2.default)("<div>");

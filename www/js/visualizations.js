@@ -65,6 +65,7 @@ export function renderCard(visualization){
 
     var portletHead = $("<div>");
     portletHead.attr("class", "m-portlet__head");
+
     portletTools3.append(portletHead);
 
     var mPortletHeadCaption = $("<div>");

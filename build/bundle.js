@@ -40778,6 +40778,14 @@ function renderChart(target, visualization) {
                     ticks: {
                         beginAtZero: true
                     }
+                }],
+                xAxes: [{
+                    ticks: {
+                        callback: function callback(value) {
+                            var date = new Date(value);
+                            return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear().toString().slice(2);
+                        }
+                    }
                 }]
             }
         }

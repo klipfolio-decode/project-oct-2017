@@ -99,7 +99,8 @@
           if (err) {
             console.log(err, err.stack);
           } else {
-            console.log(JSON.stringify(data));
+
+            // console.log(JSON.stringify(data));
             state.audioOutput = data;
 
 
@@ -195,17 +196,34 @@
       state.message = state.messages.SPEAKING;
       this.advanceConversation = function() {
         if (state.audioOutput.contentType === 'audio/mpeg') {
-          audioControl.play(state.audioOutput.audioStream, function() {
-             // check if drop m-dropdown--open is active
-             if ( $('.m-dropdown--open').length ){
-              state.renderer.prepCanvas();
-              audioControl.startRecording(state.onSilence, state.renderer.visualizeAudioBuffer);
-              state.transition(new Listening(state));
+            // If the transcript is empty, do playback the response audio.
+            if (state.audioOutput.message === "Sorry, can you please repeat that?") {
+                state.renderer.prepCanvas();
+                audioControl.startRecording(state.onSilence, state.renderer.visualizeAudioBuffer);
+                state.transition(new Listening(state));
             } else {
-              audioControl.stopRecording();
-              state.renderer.clearCanvas();
+                audioControl.play(state.audioOutput.audioStream, function() {
+                    state.renderer.prepCanvas();
+                    audioControl.startRecording(state.onSilence, state.renderer.visualizeAudioBuffer);
+                    var params = {
+                      'slots': state.audioOutput.slots,
+                      'inputTranscript': state.audioOutput.inputTranscript
+                    };
+                    if (params.slots.metric){
+                      $.ajax(
+                        {
+                          method: 'POST',
+                          contentType: 'application/json',
+                          url: '/api/visualizations',
+                          data: JSON.stringify(params)
+                        }
+                      ).done( function(){
+                        console.log('sent')
+                      })
+                    }
+                    state.transition(new Listening(state));
+                });
             }
-          });
         } else if (state.audioOutput.dialogState === 'ReadyForFulfillment') {
           state.transition(new Initial(state));
         }

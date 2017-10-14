@@ -19,6 +19,9 @@ module.exports.mapData = (data) => {
                 "borderColor": [
                     "rgba(255,99,132,1)"
                 ],
+                "backgroundColor": [
+                    "rgba(199,139,152,0)"
+                ],
                 "borderWidth": 1
             }]
         }

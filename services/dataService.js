@@ -3,7 +3,6 @@ const admin = require("firebase-admin");
 const serviceAccount = config.firebase_admin;
 const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
 const request = require("async-request")
-const dataManipulation = require("../utils/dataManipulation")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -40,6 +39,22 @@ module.exports.getMetricByName = async (metricName = 'Likes') => {
     return -1
 }
 
+module.exports.getDimensionTypeByName = async (DimensionType = 'follower_type') => {
+    DimensionType = DimensionType.toLowerCase()
+    let res = await this.getAllMetrics()
+    let metrics = res['metrics']
+    for (var i in metrics) {
+        let dimensions = metrics[i]["dimensions"]
+        for(var j in dimensions){
+            if(dimensions[i]['name'].indexOf(DimensionType) !== -1) {
+                return dimensions[i]['publicId']
+            }
+        }
+    }
+    return -1
+}
+
+
 module.exports.runQuery = async (metricId, query) => {
     console.log("Running query on external API".green)
     const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
@@ -61,7 +76,8 @@ module.exports.runQuery = async (metricId, query) => {
 module.exports.exportToFirebase = async (data) => {
     console.log("Exporting data to Firebase".green)
     var test_data = db.child('data')
-    return test_data.set(dataManipulation.mapData(data))
+
+    return test_data.set(data)
 }
 
 module.exports.get = () => {

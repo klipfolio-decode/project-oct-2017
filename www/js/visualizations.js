@@ -32,6 +32,14 @@ export function renderChart(target, visualization) {
                     ticks: {
                         beginAtZero:true
                     }
+                }],
+                xAxes: [{
+                    ticks: {
+                        callback: function(value) {
+                            var date = new Date(value);
+                            return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear().toString().slice(2);
+                        }
+                    }
                 }]
             }
         }
@@ -84,6 +92,10 @@ export function renderCard(visualization){
     mPortletBody.append(visualizationContainer);
 
     renderChart("visualizationContainer", visualization);
+}
+
+export function deleteChartById(){
+    $("#1").remove();
 }
 
 export function deleteChartById(){

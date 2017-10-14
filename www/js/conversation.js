@@ -98,7 +98,8 @@
           if (err) {
             console.log(err, err.stack);
           } else {
-            console.log(JSON.stringify(data));
+
+            // console.log(JSON.stringify(data));
             state.audioOutput = data;
             state.transition(new Speaking(state));
           }
@@ -120,6 +121,21 @@
                 audioControl.play(state.audioOutput.audioStream, function() {
                     state.renderer.prepCanvas();
                     audioControl.startRecording(state.onSilence, state.renderer.visualizeAudioBuffer);
+                    var params = {
+                      'slots': state.audioOutput.slots,
+                      'inputTranscript': state.audioOutput.inputTranscript
+                    };
+                    if (params.slots.metric){
+                      $.ajax(
+                        {
+                          method: 'POST',
+                          url: '/api/visualizations',
+                          data: params
+                        }
+                      ).done( function(){
+                        console.log('sent')
+                      })
+                    }
                     state.transition(new Listening(state));
                 });
             }

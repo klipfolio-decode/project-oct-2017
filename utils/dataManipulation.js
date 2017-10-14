@@ -10,7 +10,7 @@ module.exports.mapData = (data) => {
     ourData["visualizations"].push({
         "id": "1",
         "type": "line",
-        "label": "Social Media Likes",
+        "label": "name",
         "data": {
             "labels": labels,
             "datasets": [{
@@ -18,6 +18,9 @@ module.exports.mapData = (data) => {
                 "data": value,
                 "borderColor": [
                     "rgba(255,99,132,1)"
+                ],
+                "backgroundColor": [
+                    "rgba(199,139,152,0)"
                 ],
                 "borderWidth": 1
             }]

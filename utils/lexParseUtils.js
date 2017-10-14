@@ -19,7 +19,7 @@ module.exports.getRange = (rangeResponse) => {
 module.exports.getDimensionType = async (dimensionTypeResponse) => {
     if(dimensionTypeResponse){
       try {
-        let dimensionTypeId = await dataService.getDimensionTypeByName()
+        let dimensionTypeId = await dataService.getDimensionTypeByName(dimensionTypeResponse)
         return dimensionTypeId
       } catch (err) {
         console.log("ERROR:", err)
@@ -44,7 +44,9 @@ module.exports.getDimensionType = async (dimensionTypeResponse) => {
       queryString+="groupby:"+groupby+","
     }
     if(filter) {
-      queryString+="filter:d4b04ded4b32361ef6484773c515aad5=("+filter.toString()+")"
+      console.log("FILTER:", filter.toString())
+      queryString+="filter:d4b04ded4b32361ef6484773c515aad5="+filter.toString()+""
+      console.log("STRING:", queryString)
     }
 
     return encodeURIComponent(queryString+"}")

@@ -218,6 +218,7 @@
                           data: JSON.stringify(params)
                         }
                       ).done( function(){
+                        audioControl.stopRecording();
                         console.log('sent')
                       })
                     }

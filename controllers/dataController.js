@@ -13,11 +13,13 @@ module.exports.getVisualizations = async (req, res) => {
 	  let groupby = lexUtils.getDimensionType(req.body.slots.dimensionType)
 	  let filter = lexUtils.getDimension(req.body.slots.dimension)
 	  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
-	  console.log(query)
 	  let data = await dataService.runQuery(metricId, query)
-	  res.status(200).json(data)
-  } catch(err){
-    console.error(err)
+    //   console.log(data)
+      await dataService.exportToFirebase(data)
+
+      res.status(200).json(data)
+  } catch(err) {
+      console.log(err);
     res.status(500).send(err)
   }
 }
@@ -46,6 +48,7 @@ module.exports.test = async (req, res) => {
 			'data': data
 		})
 	} catch (err) {
+        console.log(err);
 		res.status(500).send(err)
 	}
 }

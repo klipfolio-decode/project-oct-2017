@@ -8,7 +8,7 @@
         </title>
         <meta name="description" content="Latest updates and statistic charts">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
         <!--begin::Web font -->
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
         <script>
@@ -181,16 +181,10 @@
                                         <input type="hidden" name="" id="message">
                                     </div>
 
-                                <div class="m-alert m-alert--icon m-alert--air alert alert-dismissible fade show" role="alert">
-                                    <div class="m-alert__icon">
-                                        <i class="flaticon-chat-1"></i>
+                                
+
+                                <div class="m-alert__text" id="conversation" style="font-size:16px">
                                     </div>
-                                    <div class="m-alert__text" id="conversation" style="font-size:16px">
-                                    </div>
-                                    <div class="m-alert__close">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-                                </div>
 
 
 <!--                                 <div class="m-portlet m-portlet--head-sm" id="m_portlet_tools_3">
@@ -285,12 +279,12 @@
         <!-- end::Scroll Top -->
         <!-- begin::Quick Nav -->
         <ul class="m-nav-sticky" style="margin-top: 30px; font-size: 30px;">
-            <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Speach" data-placement="left">
+            <li class="m-nav-sticky__item" >
                 <a target="#" id="audio-control">
                     <i class="fa fa-microphone" id="audio-control"></i>
                 </a>
             </li>
-            <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Text" data-placement="left">
+            <li class="m-nav-sticky__item" >
                 <a href="javascript:;" id="m_aside_header_topbar_mobile_toggle" xml:id="m_quicksearch_search">
                     <i class="fa fa-keyboard-o"></i>
                 </a>
@@ -329,120 +323,8 @@
 
 
         <script src="js/tools.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            // set the focus to the input box
-            document.getElementById("m_quicksearch_input").focus();
-
-            // Initialize the Amazon Cognito credentials provider
-            AWS.config.region = 'us-east-1'; // Region
-            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            // Provide your Pool Id here
-            IdentityPoolId:'us-east-1:6a5cf4b0-5e5c-4f5d-b5bd-d66dea8de13c',
-            });
-
-            var lexruntime = new AWS.LexRuntime();
-            var lexUserId = 'svrk8aedlgyokzngyrldrgx2kwade1l1' + Date.now();
-            var sessionAttributes = {};
-
-            function pushChat() {
-
-                // if there is text to be sent...
-                var wisdomText = document.getElementById("m_quicksearch_input");
-                if (wisdomText && wisdomText.value && wisdomText.value.trim().length > 0) {
-
-                    // disable input to show we're sending it
-                    var wisdom = wisdomText.value.trim();
-                    wisdomText.value = '...';
-                    wisdomText.locked = true;
-
-                    // send it to the Lex runtime
-                    var params = {
-                        botAlias: '$LATEST',
-                        botName: 'decode',
-                        inputText: wisdom,
-                        userId: lexUserId,
-                        sessionAttributes: sessionAttributes
-                    };
-                    showRequest(wisdom);
-                    lexruntime.postText(params, function(err, data) {
-                        if (err) {
-                            console.log(err, err.stack);
-                            showError('Error:  ' + err.message + ' (see console for details)')
-                        }
-                        if (data) {
-                            // capture the sessionAttributes for the next cycle
-                            sessionAttributes = data.sessionAttributes;
-                            // show response and/or error/dialog status
-                            console.log(data)
-                            let params = {
-                                'slots': data.slots,
-                                'inputTranscript': data.inputTranscript
-                            }
-                            if (params.slots.metric){
-                              $.ajax(
-                                {
-                                  method: 'POST',
-                                  contentType: 'application/json',
-                                  url: '/api/visualizations',
-                                  data: JSON.stringify(params)
-                                }
-                              ).done( function(){
-                                console.log('sent')
-                              })
-                            }
-
-                            showResponse(data);
-                        }
-                        // re-enable input
-                        wisdomText.value = '';
-                        wisdomText.locked = false;
-                    });
-                }
-                // we always cancel form submission
-                return false;
-            }
-
-            function showRequest(daText) {
-
-                var conversationDiv = document.getElementById('conversation');
-                var requestPara = document.createElement("P");
-                requestPara.className = 'userRequest';
-                requestPara.appendChild(document.createTextNode(daText));
-                conversationDiv.appendChild(requestPara);
-                conversationDiv.scrollTop = conversationDiv.scrollHeight;
-            }
-
-            function showError(daText) {
-
-                var conversationDiv = document.getElementById('conversation');
-                var errorPara = document.createElement("P");
-                errorPara.className = 'lexError';
-                errorPara.appendChild(document.createTextNode(daText));
-                conversationDiv.appendChild(errorPara);
-                conversationDiv.scrollTop = conversationDiv.scrollHeight;
-            }
-
-            function showResponse(lexResponse) {
-
-                var conversationDiv = document.getElementById('conversation');
-                var responsePara = document.createElement("P");
-                responsePara.className = 'lexResponse';
-                if (lexResponse.message) {
-                    responsePara.appendChild(document.createTextNode(lexResponse.message));
-                    responsePara.appendChild(document.createElement('br'));
-                }
-                if (lexResponse.dialogState === 'ReadyForFulfillment') {
-                    responsePara.appendChild(document.createTextNode(
-                        'Ready for fulfillment'));
-                    // TODO:  show slot values
-                } else {
-                    responsePara.appendChild(document.createTextNode(
-                        '(' + lexResponse.dialogState + ')'));
-                }
-                conversationDiv.appendChild(responsePara);
-                conversationDiv.scrollTop = conversationDiv.scrollHeight;
-            }
-        </script>
+         <script src="js/convo.js" type="text/javascript"></script>
+        
 
     </body>
     <!-- end::Body -->

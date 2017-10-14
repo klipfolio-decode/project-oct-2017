@@ -111,11 +111,18 @@
       state.message = state.messages.SPEAKING;
       this.advanceConversation = function() {
         if (state.audioOutput.contentType === 'audio/mpeg') {
-          audioControl.play(state.audioOutput.audioStream, function() {
-            state.renderer.prepCanvas();
-            audioControl.startRecording(state.onSilence, state.renderer.visualizeAudioBuffer);
-            state.transition(new Listening(state));
-          });
+            // If the transcript is empty, do playback the response audio.
+            if (state.audioOutput.message === "Sorry, can you please repeat that?") {
+                state.renderer.prepCanvas();
+                audioControl.startRecording(state.onSilence, state.renderer.visualizeAudioBuffer);
+                state.transition(new Listening(state));
+            } else {
+                audioControl.play(state.audioOutput.audioStream, function() {
+                    state.renderer.prepCanvas();
+                    audioControl.startRecording(state.onSilence, state.renderer.visualizeAudioBuffer);
+                    state.transition(new Listening(state));
+                });
+            }
         } else if (state.audioOutput.dialogState === 'ReadyForFulfillment') {
           state.transition(new Initial(state));
         }

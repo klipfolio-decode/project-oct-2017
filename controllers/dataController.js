@@ -19,7 +19,7 @@ module.exports.getVisualizations = async (req, res) => {
 	  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
 	  let data = await dataService.runQuery(metricId, query)
 
-      let manipulated_data = dataManipulation.mapData(data)
+      let manipulated_data = dataManipulation.mapData(data, req.body.inputTranscript || "")
       await dataService.exportToFirebase(manipulated_data)
       //res.status(200).json(data)
 	  

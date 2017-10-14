@@ -37,10 +37,10 @@ module.exports.getDimensionType = (dimensionTypeResponse) => {
     if(filter) {
       queryString+="filter:d4b04ded4b32361ef6484773c515aad5=("+filter.toString()+")"
     }
-    console.log(queryString)
+
     return encodeURIComponent(queryString+"}")
   }
-  
+
 module.exports.getDimension = (dimensionResponse) => {
     if(dimensionResponse){
       let dimensionArray = possibleDimensions.filter(dimen => dimensionResponse.includes(dimen))

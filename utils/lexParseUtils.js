@@ -19,7 +19,7 @@ module.exports.getRange = (rangeResponse) => {
 module.exports.getDimensionType = async (dimensionTypeResponse) => {
     if(dimensionTypeResponse){
       try {
-        let dimensionTypeId = await dataService.getDimensionTypeByName()
+        let dimensionTypeId = await dataService.getDimensionTypeByName(dimensionTypeResponse)
         return dimensionTypeId
       } catch (err) {
         console.log("ERROR:", err)

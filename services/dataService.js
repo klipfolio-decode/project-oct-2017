@@ -39,7 +39,7 @@ module.exports.getMetricByName = async (metricName = 'Likes') => {
     return -1
 }
 
-module.exports.getDimensionTypeByName = async (DimensionType = 'follower_type') => {
+module.exports.getDimensionTypeByName = async (DimensionType) => {
     DimensionType = DimensionType.toLowerCase()
     let res = await this.getAllMetrics()
     let metrics = res['metrics']

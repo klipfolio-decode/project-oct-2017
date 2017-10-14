@@ -8,6 +8,7 @@ module.exports.getVisualizations = async (req, res) => {
   if (req.body.inputTranscript && req.body.inputTranscript.includes('follower')) {
     req.body.slots.dimensionType = 'follower_type'
   }
+  let graphTitle = ("inputTranscript" in req.body) ? req.body.inputTranscript : "Graph"
   try{
 	  let metricId = await dataService.getMetricByName(metric)
 	  let aggregation = null
@@ -19,10 +20,9 @@ module.exports.getVisualizations = async (req, res) => {
 	  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
 	  let data = await dataService.runQuery(metricId, query)
 
-      let manipulated_data = dataManipulation.mapData(data, req.body.inputTranscript || "")
+      let manipulated_data = dataManipulation.mapData(data, graphTitle)
+
       await dataService.exportToFirebase(manipulated_data)
-      //res.status(200).json(data)
-	  
       res.status(200).json(manipulated_data)
   } catch(err) {
       console.log(err);

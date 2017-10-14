@@ -21,6 +21,7 @@ module.exports.getVisualizations = async (req, res) => {
 
       res.status(200).json(manipulated_data)
   } catch(err) {
+      console.log(err);
       if (err.message.indexOf('Firebase.set failed') !== -1){
           console.error("Failed to upload to Firebase".red)
           res.status(500).send(err)

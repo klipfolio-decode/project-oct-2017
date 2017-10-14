@@ -11,7 +11,7 @@ module.exports.getVisualizations = async (req, res) => {
 	  let periodicity = "1d"
 
 	  let range = lexUtils.getRange(req.body.slots.period)
-	  let groupby = lexUtils.getDimensionType(req.body.slots.dimensionType)
+	  let groupby = await lexUtils.getDimensionType(req.body.slots.dimensionType)
 	  let filter = lexUtils.getDimension(req.body.slots.dimension)
 	  let query = lexUtils.getQuery(aggregation,periodicity,range,groupby,filter)
 	  let data = await dataService.runQuery(metricId, query)

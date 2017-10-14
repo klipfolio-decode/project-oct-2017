@@ -1,3 +1,4 @@
+const dataService = require('../services/dataService')
 const possibleDimensions = ['friend', 'family', 'stranger']
 
 
@@ -15,9 +16,15 @@ module.exports.getRange = (rangeResponse) => {
   }
 }
 
-module.exports.getDimensionType = (dimensionTypeResponse) => {
+module.exports.getDimensionType = async (dimensionTypeResponse) => {
     if(dimensionTypeResponse){
-      return "d4b04ded4b32361ef6484773c515aad5"
+      try {
+        let dimensionTypeId = await dataService.getDimensionTypeByName()
+        return dimensionTypeId
+      } catch (err) {
+        console.log("ERROR:", err)
+        res.status(500).send(err)
+      }
     }
 }
 

@@ -39,6 +39,21 @@ module.exports.getMetricByName = async (metricName = 'Likes') => {
     return -1
 }
 
+module.exports.getDimensionTypeByName = async (DimensionType = 'follower_type') => {
+    DimensionType = DimensionType.toLowerCase()
+    let res = await this.getAllMetrics()
+    let metrics = res['metrics']
+    for (var i in metrics) {
+        let dimensions = metrics[i]["dimensions"]
+        for(var j in dimensions){
+            if(dimensions[i]['name'].indexOf(DimensionType) !== -1) {
+                return dimensions[i]['publicId']
+            }
+        }
+    }
+    return -1
+}
+
 module.exports.runQuery = async (metricId, query) => {
     console.log("Running query on external API".green)
     const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`

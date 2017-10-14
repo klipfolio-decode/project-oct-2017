@@ -18,7 +18,7 @@ module.exports.mapData = (data) => {
             ))
 
         } else {
-            return renderDimension(metricName, values, "rgba(52,152,219,1)");
+            return [renderDimension("Likes", values, "rgba(52,152,219,1)")];
         }
     }
 
@@ -28,6 +28,7 @@ module.exports.mapData = (data) => {
     var typeMap = new Set(data.results.d4b04ded4b32361ef6484773c515aad5)
     ourData["visualizations"].push(
         {
+            "id": 0,
             "type": "line",
             "label": "Social Media Likes",
             "data": {

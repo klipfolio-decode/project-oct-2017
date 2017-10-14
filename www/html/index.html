@@ -503,6 +503,7 @@
 
                 // if there is text to be sent...
                 var wisdomText = document.getElementById("m_quicksearch_input");
+                var inputTranscript = document.getElementById("m_quicksearch_input").value
                 if (wisdomText && wisdomText.value && wisdomText.value.trim().length > 0) {
 
                     // disable input to show we're sending it
@@ -531,7 +532,7 @@
                             console.log(data)
                             let params = {
                                 'slots': data.slots,
-                                'inputTranscript': data.inputTranscript
+                                'inputTranscript': inputTranscript
                             }
                             if (params.slots.metric){
                               $.ajax(

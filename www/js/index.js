@@ -18,12 +18,15 @@ function render(){
 	viz.renderChart("visualizationContainer", mockData.visualizations[0]);
 }
 
+/*
 const addChartButton = document.createElement("button")
 $(addChartButton)
 	.attr("id", "button1")
 	.html("Add Chart")
 	.appendTo(document.body)
 	.click(render);
+
+	*/
 
 if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);
 else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));

@@ -32,10 +32,10 @@
       this.renderer = renderer;
 
       this.messages = Object.freeze({
-        PASSIVE: 'Passive...',
-        LISTENING: 'Listening...',
-        SENDING: 'Sending...',
-        SPEAKING: 'Speaking...'
+        PASSIVE: 'Passive',
+        LISTENING: 'Listening',
+        SENDING: 'Sending',
+        SPEAKING: 'Speaking'
       });
 
       this.onSilence = function() {

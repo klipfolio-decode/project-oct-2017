@@ -10,21 +10,40 @@ firebase.initializeApp(config.firebase);
 var database = firebase.database();
 var nameRef = database.ref().child('data');
 
-nameRef.on('value', snap => {
-  viz.renderAll(snap.val())
-});
+var ids = [];
 
-function render(){
-	viz.renderChart("visualizationContainer", mockData.visualizations[0]);
-}
+nameRef.on('value', snap => {
+	var updatedIds = []
+	var toRender = []
+	var toDelete = []
+	snap.val().visualizations.forEach(function(visualization){
+		updatedIds.push(visualization.id)
+    })
+
+    var isSameSet = function( arr1, arr2 ) {
+	  return  $( arr1 ).not( arr2 ).length === 0 && $( arr2 ).not( arr1 ).length === 0;  
+	}
+	
+	if(!isSameSet( updatedIds, ids )){
+		toRender = $(updatedIds).not(ids).get();
+		toDelete = $(ids).not(updatedIds).get();
+		ids = updatedIds;
+
+		console.log("R " + toRender);
+		console.log("D " + toDelete);
+	}
+
+	console.log("IDs " + ids)
+	console.log("Updated IDs " + updatedIds)
+  	viz.renderAll(snap.val())
+});
 
 /*
 const addChartButton = document.createElement("button")
 $(addChartButton)
 	.attr("id", "button1")
 	.html("Add Chart")
-	.appendTo(document.body)
-	.click(render);
+	.appendTo(document.body);
 
 	*/
 

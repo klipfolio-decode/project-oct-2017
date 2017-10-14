@@ -40684,21 +40684,40 @@ firebase.initializeApp(_config2.default.firebase);
 var database = firebase.database();
 var nameRef = database.ref().child('data');
 
+var ids = [];
+
 nameRef.on('value', function (snap) {
+	var updatedIds = [];
+	var toRender = [];
+	var toDelete = [];
+	snap.val().visualizations.forEach(function (visualization) {
+		updatedIds.push(visualization.id);
+	});
+
+	var isSameSet = function isSameSet(arr1, arr2) {
+		return (0, _jquery2.default)(arr1).not(arr2).length === 0 && (0, _jquery2.default)(arr2).not(arr1).length === 0;
+	};
+
+	if (!isSameSet(updatedIds, ids)) {
+		toRender = (0, _jquery2.default)(updatedIds).not(ids).get();
+		toDelete = (0, _jquery2.default)(ids).not(updatedIds).get();
+		ids = updatedIds;
+
+		console.log("R " + toRender);
+		console.log("D " + toDelete);
+	}
+
+	console.log("IDs " + ids);
+	console.log("Updated IDs " + updatedIds);
 	viz.renderAll(snap.val());
 });
-
-function render() {
-	viz.renderChart("visualizationContainer", mockData.visualizations[0]);
-}
 
 /*
 const addChartButton = document.createElement("button")
 $(addChartButton)
 	.attr("id", "button1")
 	.html("Add Chart")
-	.appendTo(document.body)
-	.click(render);
+	.appendTo(document.body);
 
 	*/
 
@@ -40717,6 +40736,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.renderAll = renderAll;
 exports.renderTo = renderTo;
 exports.renderChart = renderChart;
+exports.renderCard = renderCard;
+exports.deleteChartById = deleteChartById;
 
 var _jquery = __webpack_require__(45);
 
@@ -40729,10 +40750,10 @@ var _chart2 = _interopRequireDefault(_chart);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function renderAll(data) {
-    (0, _jquery2.default)("#visualizationContainer").html("<p>hi</p>");
+    (0, _jquery2.default)("#cardContainer").html("");
 
     data.visualizations.forEach(function (visualization) {
-        renderChart("visualizationContainer", visualization);
+        renderCard(visualization);
     });
 }
 
@@ -40761,8 +40782,54 @@ function renderChart(target, visualization) {
             }
         }
     });
+    canvas.attr("id", visualization.id).appendTo((0, _jquery2.default)("." + target));
+}
 
-    canvas.appendTo((0, _jquery2.default)("#" + target));
+function renderCard(visualization) {
+    var cardContainer = (0, _jquery2.default)("#cardContainer");
+
+    var portletTools3 = (0, _jquery2.default)("<div>");
+    portletTools3.attr("class", "m-portlet m-portlet--head-sm").attr("id", "m_portlet_tools_3");
+
+    cardContainer.append(portletTools3);
+
+    var portletHead = (0, _jquery2.default)("<div>");
+    portletHead.attr("class", "m-portlet__head");
+    portletTools3.append(portletHead);
+
+    var mPortletHeadCaption = (0, _jquery2.default)("<div>");
+    mPortletHeadCaption.attr("class", "m-portlet__head-caption");
+    portletHead.append(mPortletHeadCaption);
+
+    var mPortletHeadTitle = (0, _jquery2.default)("<div>");
+    mPortletHeadTitle.attr("class", "m-portlet__head-title");
+    mPortletHeadCaption.append(mPortletHeadTitle);
+
+    var mPortletHeadIcon = (0, _jquery2.default)("<span>");
+    mPortletHeadIcon.attr("class", "m-portlet__head-icon");
+    mPortletHeadTitle.append(mPortletHeadIcon);
+
+    var mPortletHeadText = (0, _jquery2.default)("<h3>");
+    mPortletHeadText.attr("class", "m-portlet__head-text").html("Chart");
+    mPortletHeadIcon.append(mPortletHeadText);
+
+    var mPortletHeadTools = (0, _jquery2.default)("<div>");
+    mPortletHeadTools.attr("class", "m-portlet__head-tools");
+    portletHead.append(mPortletHeadTools);
+
+    var mPortletBody = (0, _jquery2.default)("<div>");
+    mPortletBody.attr("class", "m-portlet__body");
+    portletTools3.append(mPortletBody);
+
+    var visualizationContainer = (0, _jquery2.default)("<div>");
+    visualizationContainer.attr("class", "visualizationContainer");
+    mPortletBody.append(visualizationContainer);
+
+    renderChart("visualizationContainer", visualization);
+}
+
+function deleteChartById() {
+    (0, _jquery2.default)("#1").remove();
 }
 
 /***/ }),
@@ -69266,7 +69333,7 @@ function stop(id) {
 /* 338 */
 /***/ (function(module, exports) {
 
-module.exports = {"port":3000,"firebase":{"apiKey":"AIzaSyAGUD_dENazGQje5TVhCe7pAqf4YlaNgOA","authDomain":"klipfolio-e40dd.firebaseapp.com","databaseURL":"https://klipfolio-e40dd.firebaseio.com","projectId":"klipfolio-e40dd","storageBucket":"","messagingSenderId":"269386088678"}}
+module.exports = {"port":3000,"external_api":"metrics-01.stage-01.kfdev-1.ca","external_api_port":6443,"firebase_admin":{"type":"service_account","project_id":"klipfolio-e40dd","private_key_id":"3306e5fabb12c42561614959735ff6d9ba51ac78","private_key":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCiEIh7FhT4dRKO\nxFWpg1AMec2R+MFgEM9FBmMcCXFy1cET0mG/9QFIxBTQWdtFYjO+jh2BDYIT2phb\nRfDxND7p2ee/iichN04rgEpO/dIzh+B3w+meHTs6jkVVHAH+/BKVtR4AsKK52ZgF\nrZLVAkWbHMRYQuf9Q+RdDGgJMb1r2w1XzMMLAsiCasFij4yZ0h+uNmcKbV5StYPf\nF+mnaNbz26SScDvals+sMkpV375xa1fmaLEKQi2UIL3KnOHlSheqdWTCCRADXVgo\nFhR2TD72RL0QKUZX7YWlom/p/G3CUh4Cn8dlLJ/yk7IyaitN+0IkCwgCiVLJ+zhd\nXdARNNCzAgMBAAECggEABAcdz5es7r/A8g3vageMl299xMSXMnX9MivEjirMnt4a\nQZzjjeyuAKNpCsg7wF+cpCPKehrS/MMJ1r0ApKnG5XMnLF52xbvFDqw/P1zsGOt4\nzJx/rAkAmIP+RHxi3DImfhhP4G6wlZd4WBdPxElSI5qc3c2El6BcTkXywBh0Of/Q\n3iELTzkS5AA+RM45VdrtTq+rYVoVHZMJy0kPFgP9MrHFLKniTa94tplJPIWdzHkY\nNtKTWVt11yuxalYcDRr5Fqb+Ix19IWfaCybwre8iMenhh5YDXQjBWL6qp5iwHw6i\n+N03aVmg86484CKcK/Wz+3UxrKN4ZrMP4OGIet9mDQKBgQDgDE8ahKUm79S/tPz9\ndlyuIMwkH3PL2gdAW2jdHzSXP57VBOU1H2yjJvdbBftYTU2J0pW1Y2Y2XRe1e9nc\nO/Uyyo1tb0Q/LBP76766GzW9f+TVZupMzWdNZ9ZYfeeYOUE/0iMtPakEaD71/Y59\npEDNeWbM+BWqg8ewJUFP1tU+zwKBgQC5LUpxpNagR8Y/h/yNxFoVg+x43t1bElCW\nSvtaUfo1seAu8qocHS/x8JxdjUSGD4G6Nn/ozm+y6//GBwvL259oufgDHzhJ+gdk\nqrlx+EQDqY3rOvvEz9dk9hezwKtDjJ3/qrRDI+W+/nb8MMwK2/33Ip5udlPIQUsM\nosjaHy7o3QKBgCYg0iFwK27p56nMUjWMPA+CE1ueYqVxcER6iej/k4Kd2BjmYV9d\n/q3xRq0d4n1Pgn+O791TkiR0SUGgVx4Mshi3scPK6LFbffckUmv3j3i1WCsc/Yie\neBMLNcYPfyc/ryP+TfA4Cxht6TERunsVRdXx8BW3rnA7RvNqE6hTpiyvAoGAeGBL\n04KPjxP5eRVChToOQYxH7e8awHgwcPL/YKCH4d3m2T4gfTQwFbwPOfV6hReRgmap\nUcLY89vconO0JGp5vw+dfRIPem+R3Mvqz37PX/4Z5r+qKS/fWp9rmwt1iezgTPJA\nSqEMWdN7r8dc7PZDqyMTEMXVAwoG6ojrvnek+/UCgYEArxhF+RmYJjV0qjeqn/7P\nU2JZETWiTpFk1o2T0Q3O6L7Aoj2JE4fQlMaMJE7WrGhTPLVNX8qMjMZXkmQTK9T1\nFhINm2ADlV99nzZSo7MTIpmDJrificH8b4Qhpd2H9s3yT18cgpGoZm+3CDWJEWuT\n7ftaCPqT5PG7jrSRxowbl20=\n-----END PRIVATE KEY-----\n","client_email":"firebase-adminsdk-en8q8@klipfolio-e40dd.iam.gserviceaccount.com","client_id":"101376188808080019446","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-en8q8%40klipfolio-e40dd.iam.gserviceaccount.com"},"firebase":{"apiKey":"AIzaSyAGUD_dENazGQje5TVhCe7pAqf4YlaNgOA","authDomain":"klipfolio-e40dd.firebaseapp.com","databaseURL":"https://klipfolio-e40dd.firebaseio.com","projectId":"klipfolio-e40dd","storageBucket":"","messagingSenderId":"269386088678"}}
 
 /***/ })
 /******/ ]);

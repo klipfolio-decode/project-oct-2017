@@ -15,61 +15,63 @@ var sessionAttributes = {};
 
 function pushChat() {
 
-    // if there is text to be sent...
-    var wisdomText = document.getElementById("m_quicksearch_input");
-    if (wisdomText && wisdomText.value && wisdomText.value.trim().length > 0) {
+// if there is text to be sent...
+var wisdomText = document.getElementById("m_quicksearch_input");
+var inputTranscript = document.getElementById("m_quicksearch_input").value
+if (wisdomText && wisdomText.value && wisdomText.value.trim().length > 0) {
 
-        // disable input to show we're sending it
-        var wisdom = wisdomText.value.trim();
-        wisdomText.value = '...';
-        wisdomText.locked = true;
+    // disable input to show we're sending it
+    var wisdom = wisdomText.value.trim();
+    wisdomText.value = '...';
+    wisdomText.locked = true;
 
-        // send it to the Lex runtime
-        var params = {
-            botAlias: '$LATEST',
-            botName: 'decode',
-            inputText: wisdom,
-            userId: lexUserId,
-            sessionAttributes: sessionAttributes
-        };
-        showRequest(wisdom);
-        lexruntime.postText(params, function(err, data) {
-            if (err) {
-                console.log(err, err.stack);
-                showError('Error:  ' + err.message + ' (see console for details)')
+    // send it to the Lex runtime
+    var params = {
+        botAlias: '$LATEST',
+        botName: 'decode',
+        inputText: wisdom,
+        userId: lexUserId,
+        sessionAttributes: sessionAttributes
+    };
+    showRequest(wisdom);
+    lexruntime.postText(params, function(err, data) {
+        if (err) {
+            console.log(err, err.stack);
+            showError('Error:  ' + err.message + ' (see console for details)')
+        }
+        if (data) {
+            // capture the sessionAttributes for the next cycle
+            sessionAttributes = data.sessionAttributes;
+            // show response and/or error/dialog status
+            console.log(data)
+            let params = {
+                'slots': data.slots,
+                'inputTranscript': inputTranscript
             }
-            if (data) {
-                // capture the sessionAttributes for the next cycle
-                sessionAttributes = data.sessionAttributes;
-                // show response and/or error/dialog status
-                console.log(data)
-                let params = {
-                    'slots': data.slots,
-                    'inputTranscript': data.inputTranscript
+            if (params.slots.metric){
+              $.ajax(
+                {
+                  method: 'POST',
+                  contentType: 'application/json',
+                  url: '/api/visualizations',
+                  data: JSON.stringify(params)
                 }
-                if (params.slots.metric){
-                  $.ajax(
-                    {
-                      method: 'POST',
-                      contentType: 'application/json',
-                      url: '/api/visualizations',
-                      data: JSON.stringify(params)
-                    }
-                  ).done( function(){
-                    console.log('sent')
-                  })
-                }
-
-                showResponse(data);
+              ).done( function(){
+                console.log('sent')
+              })
             }
-            // re-enable input
-            wisdomText.value = '';
-            wisdomText.locked = false;
-        });
-    }
-    // we always cancel form submission
-    return false;
+
+            showResponse(data);
+        }
+        // re-enable input
+        wisdomText.value = '';
+        wisdomText.locked = false;
+    });
 }
+// we always cancel form submission
+return false;
+}
+
 
 function showRequest(daText) {
 
@@ -78,8 +80,8 @@ function showRequest(daText) {
 
     requestPara.setAttribute('class','userRequest m-alert m-alert--outline alert alert-brand alert-dismissible fade show');    
 
-    requestPara.appendChild(document.createTextNode(daText));
-    conversationDiv.appendChild(requestPara);
+    requestPara.prepend(document.createTextNode(daText));
+    conversationDiv.prepend(requestPara);
     conversationDiv.scrollTop = conversationDiv.scrollHeight;
 }
 
@@ -90,8 +92,8 @@ function showError(daText) {
     responsePara.setAttribute('class','lexError alert alert-danger');    
 
 
-    errorPara.appendChild(document.createTextNode(daText));
-    conversationDiv.appendChild(errorPara);
+    errorPara.prepend(document.createTextNode(daText));
+    conversationDiv.prepend(errorPara);
     conversationDiv.scrollTop = conversationDiv.scrollHeight;
 }
 
@@ -102,17 +104,17 @@ function showResponse(lexResponse) {
     responsePara.setAttribute('class','lexResponse alert alert-brand');    
 
     if (lexResponse.message) {
-        responsePara.appendChild(document.createTextNode(lexResponse.message));
-        responsePara.appendChild(document.createElement('br'));
+        responsePara.prepend(document.createTextNode(lexResponse.message));
+        responsePara.prepend(document.createElement('br'));
     }
     if (lexResponse.dialogState === 'ReadyForFulfillment') {
-        responsePara.appendChild(document.createTextNode(
+        responsePara.prepend(document.createTextNode(
             'Ready for fulfillment'));
         // TODO:  show slot values
     } else {
-        responsePara.appendChild(document.createTextNode(
+        responsePara.prepend(document.createTextNode(
             '(' + lexResponse.dialogState + ')'));
     }
-    conversationDiv.appendChild(responsePara);
+    conversationDiv.prepend(responsePara);
     conversationDiv.scrollTop = conversationDiv.scrollHeight;
 }

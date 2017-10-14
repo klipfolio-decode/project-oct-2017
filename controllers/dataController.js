@@ -5,6 +5,9 @@ const dataManipulation = require("../utils/dataManipulation")
 
 module.exports.getVisualizations = async (req, res) => {
   let metric = req.body["slots"]["metric"]
+  if (req.body.inputTranscript && req.body.inputTranscript.includes('follower')) {
+    req.body.slots.dimensionType = 'follower_type'
+  }
   try{
 	  let metricId = await dataService.getMetricByName(metric)
 	  let aggregation = null

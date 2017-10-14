@@ -61,6 +61,7 @@ export function renderCard(visualization){
 
     var portletHead = $("<div>");
     portletHead.attr("class", "m-portlet__head");
+
     portletTools3.append(portletHead);
 
     var mPortletHeadCaption = $("<div>");
@@ -92,10 +93,6 @@ export function renderCard(visualization){
     mPortletBody.append(visualizationContainer);
 
     renderChart("visualizationContainer", visualization);
-}
-
-export function deleteChartById(){
-    $("#1").remove();
 }
 
 export function deleteChartById(){

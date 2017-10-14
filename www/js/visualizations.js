@@ -97,3 +97,7 @@ export function renderCard(visualization){
 export function deleteChartById(){
     $("#1").remove();
 }
+
+export function deleteChartById(){
+    $("#1").remove();
+}

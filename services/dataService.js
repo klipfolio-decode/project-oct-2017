@@ -54,6 +54,7 @@ module.exports.getDimensionTypeByName = async (DimensionType = 'follower_type') 
     return -1
 }
 
+
 module.exports.runQuery = async (metricId, query) => {
     console.log("Running query on external API".green)
     const endpoint = `https://${config.external_api}:${config.external_api_port}/api/v1/metrics/`
@@ -75,6 +76,7 @@ module.exports.runQuery = async (metricId, query) => {
 module.exports.exportToFirebase = async (data) => {
     console.log("Exporting data to Firebase".green)
     var test_data = db.child('data')
+
     return test_data.set(data)
 }
 

@@ -1,4 +1,4 @@
-module.exports.mapData = (data) => {
+module.exports.mapData = (data, graphTitle) => {
     const renderDimension = (label, values, color) => ({
         "label": label,
         "data": values,
@@ -28,6 +28,12 @@ module.exports.mapData = (data) => {
     var typeMap = new Set(data.results.d4b04ded4b32361ef6484773c515aad5)
     ourData["visualizations"].push(
         {
+            "options": {
+                "title": {
+                    "display": true,
+                    "text": graphTitle
+                }
+            },
             "id": 0,
             "type": "line",
             "label": "Social Media Likes",

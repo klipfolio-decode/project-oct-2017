@@ -27,6 +27,10 @@ export function renderChart(target, visualization) {
         type: visualization.type,
         data: visualization.data,
         options: {
+            title: {
+                display: true,
+                text: visualization.options.title.text
+            },
             scales: {
                 yAxes: [{
                     ticks: {

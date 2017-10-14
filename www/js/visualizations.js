@@ -84,42 +84,6 @@ export function renderCard(visualization){
     mPortletBody.append(visualizationContainer);
 
     renderChart("visualizationContainer", visualization);
-
-//     <div class="m-portlet m-portlet--head-sm" id="m_portlet_tools_3">
-//     <div class="m-portlet__head">
-//         <div class="m-portlet__head-tools">
-//             <ul class="m-portlet__nav">
-//                 <li class="m-portlet__nav-item">
-//                     <a href="#" data-portlet-tool="reload" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Reload">
-//                         <i class="la la-refresh"></i>
-//                     </a>
-//                 </li>
-//                 <li class="m-portlet__nav-item">
-//                     <a href="#" data-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Collapse">
-//                         <i class="la la-angle-down"></i>
-//                     </a>
-//                 </li>
-//                 <li class="m-portlet__nav-item">
-//                     <a href="#" data-portlet-tool="fullscreen" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Fullscreen">
-//                         <i class="la la-expand"></i>
-//                     </a>
-//                 </li>
-//                 <li class="m-portlet__nav-item">
-//                     <a href="#" data-portlet-tool="remove" class="m-portlet__nav-link m-portlet__nav-link--icon" title="" data-original-title="Remove">
-//                         <i class="la la-close"></i>
-//                     </a>
-//                 </li>
-//             </ul>
-//         </div>
-//     </div>
-//     <div class="m-portlet__body">
-//         <div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="300" style="overflow: auto; height: 300px; max-height: 300px;">
-//             <div class="visualizationContainer"></div>
-//             <div class="m-separator m-separator--space m-separator--dashed"></div>
-//         </div>
-//     </div>
-// </div>
-
 }
 
 export function deleteChartById(){

@@ -129,8 +129,9 @@
                       $.ajax(
                         {
                           method: 'POST',
+                          contentType: 'application/json',
                           url: '/api/visualizations',
-                          data: params
+                          data: JSON.stringify(params)
                         }
                       ).done( function(){
                         console.log('sent')

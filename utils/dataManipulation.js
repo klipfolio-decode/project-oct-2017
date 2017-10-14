@@ -10,7 +10,7 @@ module.exports.mapData = (data) => {
     ourData["visualizations"].push({
         "id": "1",
         "type": "line",
-        "label": "name",
+        "label": "Social Media Likes",
         "data": {
             "labels": labels,
             "datasets": [{

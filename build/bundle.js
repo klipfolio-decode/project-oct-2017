@@ -40692,8 +40692,15 @@ function render() {
 	viz.renderChart("visualizationContainer", mockData.visualizations[0]);
 }
 
-var addChartButton = document.createElement("button");
-(0, _jquery2.default)(addChartButton).attr("id", "button1").html("Add Chart").appendTo(document.body).click(render);
+/*
+const addChartButton = document.createElement("button")
+$(addChartButton)
+	.attr("id", "button1")
+	.html("Add Chart")
+	.appendTo(document.body)
+	.click(render);
+
+	*/
 
 if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));else window.onload = new lexaudio.example();
 
@@ -40722,7 +40729,7 @@ var _chart2 = _interopRequireDefault(_chart);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function renderAll(data) {
-    (0, _jquery2.default)("#visualizationContainer").html("");
+    (0, _jquery2.default)("#visualizationContainer").html("<p>hi</p>");
 
     data.visualizations.forEach(function (visualization) {
         renderChart("visualizationContainer", visualization);

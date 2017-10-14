@@ -31,7 +31,7 @@
 	</head>
 	<!-- end::Head -->
 	<!-- end::Body -->
-	<body style="background-image: url(assets/app/media/img/bg/bg-1.jpg)"  class="m-page--boxed m-body--fixed m-header--static m-aside--offcanvas-default"  >
+	<body style="background-image: url(assets/app/media/img/bg/bg-1.jpg)"  class="m-page--boxed m-body--fixed m-header--static m-aside--offcanvas-default m-header-search--mobile-expanded"  >
 		<!-- begin:: Page -->
 		<div class="m-grid m-grid--hor m-grid--root m-page">
 			<!-- begin::Header -->
@@ -54,9 +54,11 @@
 									</a>
 									<!-- end::Responsive Header Menu Toggler-->
 									<!-- begin::Topbar Toggler-->
+									<!--
 									<a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
 										<i class="flaticon-search"></i>
 									</a>
+								-->
 									<!--end::Topbar Toggler-->
 								</div>
 							</div>
@@ -66,6 +68,7 @@
 						<div class="m-grid__item m-grid__item--fluid m-header-head" id="m_header_nav">
 							<div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-topbar__nav-wrapper">
+									<!-- 
 									<ul class="m-topbar__nav m-nav m-nav--inline">
 										<li class="m-nav__item m-topbar__quick-actions m-topbar__quick-actions--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push m-dropdown--mobile-full-width m-dropdown--skin-light" data-dropdown-toggle="click" aria-expanded="true">
 											<a href="#" class="m-nav__link m-dropdown__toggle" id="audio-control">
@@ -76,44 +79,15 @@
 													</span>
 												</span>
 											</a>
-											<div class="m-dropdown__wrapper">
-												<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 26.8px;"></span>
-												<div class="m-dropdown__inner">
-													<div class="m-dropdown__header m--align-center" style="background: url(assets/app/media/img/misc/quick_actions_bg.jpg); background-size: cover;">
-														<span class="m-dropdown__header-title">
-															Voice Command
-														</span>
-													</div>
-													<div class="m-dropdown__body m-dropdown__body--paddingless">
-														<div class="m-dropdown__content">
-															<div class="m-scrollable" data-scrollable="false" data-max-height="380" data-mobile-max-height="200">
-																<div class="m-nav-grid m-nav-grid--skin-light">
-																	<div class="m-nav-grid__row">
-
-                                                                        <!-- Begin Waveform Container -->
-                                                                        <div class="audio-control" style="width:100% !important; height:100% !important">
-                                                                            <p id="audio-control" class="white-circle">
-                                                                                <img src="images/lex.png">
-                                                                                <canvas class="visualizer"></canvas>
-                                                                            </p>
-                                                                            <p><span id="message"></span></p>
-                                                                        </div>
-                                                                        <!-- End Waveform Container -->
-
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
 										</li>
 
 
 									</ul>
+								-->
 								</div>
 							</div>
 						</div>
+					
 
 						<!-- end::Topbar -->
 					</div>
@@ -318,7 +292,7 @@
 											<i class="flaticon-search"></i>
 										</span>
 										<span class="m-header-search__input-wrapper">
-											<input autocomplete="off" type="text" name="q" class="m-header-search__input" value="" placeholder="Search..." id="m_quicksearch_input">
+											<input autocomplete="off" type="text" name="q" class="m-header-search__input" value="" placeholder="Command..." id="m_quicksearch_input">
 										</span>
 										<span class="m-header-search__icon-close" id="m_quicksearch_close">
 											<i class="la la-remove"></i>
@@ -329,18 +303,6 @@
 									</div>
 								</form>
 								<!--end::Search Form -->
-								<!--begin::Search Results -->
-								<div class="m-dropdown__wrapper">
-									<div class="m-dropdown__arrow m-dropdown__arrow--center"></div>
-									<div class="m-dropdown__inner">
-										<div class="m-dropdown__body">
-											<div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-max-height="300" data-mobile-max-height="200">
-												<div class="m-dropdown__content m-list-search m-list-search--skin-light"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!--end::Search Results -->
 							</div>
 							<!--end::Search-->
 						</div>
@@ -372,11 +334,16 @@
 							<div class="m-content">
 								<!--Begin::Main Portlet-->
 
+								<div class="audio-control" style="width:100% !important;">
+                                        <canvas style="width:120% !important; height: 50px; margin-left: -10% !important;"  class="visualizer"></canvas>
+                                        <input type="hidden" name="" id="message"> 
+                                    </div>
+
 								<div class="m-alert m-alert--icon m-alert--air alert alert-dismissible fade show" role="alert">
 									<div class="m-alert__icon">
 										<i class="flaticon-chat-1"></i>
 									</div>
-									<div class="m-alert__text" style="font-size:16px">
+									<div class="m-alert__text" style="font-size:16px" id="user-input-text">
 										This is what you said...
 									</div>
 									<div class="m-alert__close">
@@ -385,7 +352,7 @@
 								</div>
 
 
-<!-- 								<div class="m-portlet m-portlet--head-sm" id="m_portlet_tools_3">
+								<div class="m-portlet m-portlet--head-sm" id="m_portlet_tools_3">
 									<div class="m-portlet__head">
 										<div class="m-portlet__head-caption">
 											<div class="m-portlet__head-title">
@@ -424,123 +391,11 @@
 									</div>
 									<div class="m-portlet__body">
 										<div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="300" style="overflow: auto; height: 300px; max-height: 300px;">
-											<div class="visualizationContainer"></div>
-											<div class="m-separator m-separator--space m-separator--dashed"></div>
-										</div>
-									</div>
-								</div> -->
-								<div id="cardContainer"></div>
-
-
-								<div class="m-portlet">
-									<div class="m-portlet__body  m-portlet__body--no-padding">
-										<div class="row m-row--no-padding m-row--col-separator-xl">
-											<div class="col-xl-4">
-												<!--begin:: Widgets/Daily Sales-->
-												<div class="m-widget14">
-													<div class="m-widget14__header m--margin-bottom-30">
-														<h3 class="m-widget14__title">
-															Daily Sales
-														</h3>
-														<span class="m-widget14__desc">
-															Check out each collumn for more details
-														</span>
-													</div>
-													<div class="m-widget14__chart" style="height:120px;">
-														<canvas  id="m_chart_daily_sales"></canvas>
-													</div>
-												</div>
-												<!--end:: Widgets/Daily Sales-->
-											</div>
-											<div class="col-xl-4">
-												<!--begin:: Widgets/Profit Share-->
-												<div class="m-widget14">
-													<div class="m-widget14__header">
-														<h3 class="m-widget14__title">
-															Profit Share
-														</h3>
-														<span class="m-widget14__desc">
-															Profit Share between customers
-														</span>
-													</div>
-													<div class="row  align-items-center">
-														<div class="col">
-															<div id="m_chart_profit_share" class="m-widget14__chart" style="height: 160px">
-																<div class="m-widget14__stat">
-																	45
-																</div>
-															</div>
-														</div>
-														<div class="col">
-															<div class="m-widget14__legends">
-																<div class="m-widget14__legend">
-																	<span class="m-widget14__legend-bullet m--bg-accent"></span>
-																	<span class="m-widget14__legend-text">
-																		37% Sport Tickets
-																	</span>
-																</div>
-																<div class="m-widget14__legend">
-																	<span class="m-widget14__legend-bullet m--bg-warning"></span>
-																	<span class="m-widget14__legend-text">
-																		47% Business Events
-																	</span>
-																</div>
-																<div class="m-widget14__legend">
-																	<span class="m-widget14__legend-bullet m--bg-brand"></span>
-																	<span class="m-widget14__legend-text">
-																		19% Others
-																	</span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!--end:: Widgets/Profit Share-->
-											</div>
-											<div class="col-xl-4">
-												<!--begin:: Widgets/Revenue Change-->
-												<div class="m-widget14">
-													<div class="m-widget14__header">
-														<h3 class="m-widget14__title">
-															Revenue Change
-														</h3>
-														<span class="m-widget14__desc">
-															Revenue change breakdown by cities
-														</span>
-													</div>
-													<div class="row  align-items-center">
-														<div class="col">
-															<div id="m_chart_revenue_change" class="m-widget14__chart1" style="height: 180px"></div>
-														</div>
-														<div class="col">
-															<div class="m-widget14__legends">
-																<div class="m-widget14__legend">
-																	<span class="m-widget14__legend-bullet m--bg-accent"></span>
-																	<span class="m-widget14__legend-text">
-																		+10% New York
-																	</span>
-																</div>
-																<div class="m-widget14__legend">
-																	<span class="m-widget14__legend-bullet m--bg-warning"></span>
-																	<span class="m-widget14__legend-text">
-																		-7% London
-																	</span>
-																</div>
-																<div class="m-widget14__legend">
-																	<span class="m-widget14__legend-bullet m--bg-brand"></span>
-																	<span class="m-widget14__legend-text">
-																		+20% California
-																	</span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!--end:: Widgets/Revenue Change-->
-											</div>
+											<div id="visualizationContainer"></div>
 										</div>
 									</div>
 								</div>
+							
 								<!--End::Main Portlet-->
 
 
@@ -570,8 +425,7 @@
 			</footer>
 		</div>
 		<!-- end:: Page -->
-		<!-- begin::Quick Sidebar -->
-        </div>
+	
 
         <!-- <div class="audio-control">
                             <p id="audio-control" class="white-circle">
@@ -580,7 +434,6 @@
                             </p>
                             <p><span id="message"></span></p>
                         </div> -->
-		<!-- end::Quick Sidebar -->
 		<!-- begin::Scroll Top -->
 		<div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500" data-scroll-speed="300">
 			<i class="la la-arrow-up"></i>
@@ -588,25 +441,13 @@
 		<!-- end::Scroll Top -->
 		<!-- begin::Quick Nav -->
 		<ul class="m-nav-sticky" style="margin-top: 30px; font-size: 30px;">
-			<!--
-			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Showcase" data-placement="left">
-				<a href="">
-					<i class="la la-eye"></i>
-				</a>
-			</li>
-			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Pre-sale Chat" data-placement="left">
-				<a href="" >
-					<i class="la la-comments-o"></i>
-				</a>
-			</li>
-			-->
 			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Speach" data-placement="left">
-				<a href="#" target="_blank" id="audio-control">
-					<i class="fa fa-microphone"></i>
+				<a target="#" id="audio-control">
+					<i class="fa fa-microphone" id="audio-control"></i>
 				</a>
 			</li>
 			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Text" data-placement="left">
-				<a href="#" target="_blank">
+				<a href="javascript:;" id="m_aside_header_topbar_mobile_toggle" xml:id="m_quicksearch_search">
 					<i class="fa fa-keyboard-o"></i>
 				</a>
 			</li>

@@ -32,7 +32,7 @@
      * Clears the canvas element.
      */
     var clearCanvas = function() {
-      canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+      canvasCtx.clearRect(0, 0, canvas.width*2, canvas.height);
       listening = false;
     };
 
@@ -62,13 +62,11 @@
           return;
         }
 
-        canvasCtx.fillStyle = 'rgb(249,250,252)';
-        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-        canvasCtx.lineWidth = 1;
-        canvasCtx.strokeStyle = 'rgb(0,125,188)';
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = 'rgb(113, 106, 202)';
         canvasCtx.beginPath();
 
-        var sliceWidth = WIDTH * 1.0 / bufferLength;
+        var sliceWidth = WIDTH * 4.0 / bufferLength;
         var x = 0;
 
         for (var i = 0; i < bufferLength; i++) {
@@ -82,7 +80,7 @@
           x += sliceWidth;
         }
 
-        canvasCtx.lineTo(canvas.width, canvas.height / 2);
+        canvasCtx.lineTo(canvas.width, canvas.height * 10);
         canvasCtx.stroke();
       }
 

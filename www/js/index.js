@@ -38,11 +38,14 @@ nameRef.on('value', snap => {
   	viz.renderAll(snap.val())
 });
 
+/*
 const addChartButton = document.createElement("button")
 $(addChartButton)
 	.attr("id", "button1")
 	.html("Add Chart")
 	.appendTo(document.body);
+
+	*/
 
 if (window.addEventListener) window.addEventListener("load", new lexaudio.example(), false);
 else if (window.attachEvent) window.attachEvent("onload", setup(new lexaudio.example()));

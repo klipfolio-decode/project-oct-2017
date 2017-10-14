@@ -19,7 +19,8 @@ module.exports.getVisualizations = async (req, res) => {
 
       let manipulated_data = dataManipulation.mapData(data)
       await dataService.exportToFirebase(manipulated_data)
-
+      //res.status(200).json(data)
+	  
       res.status(200).json(manipulated_data)
   } catch(err) {
       console.log(err);

@@ -100,13 +100,13 @@
       }
 
       var curr_value_time = (dataArray[0] / 128) - 1.0;
-
-      if (curr_value_time > 0.01 || curr_value_time < -0.01) {
+      console.log("threshold: " + curr_value_time);
+      if (curr_value_time > 0.2 || curr_value_time < -0.2) {
         start = Date.now();
       }
       var newtime = Date.now();
       var elapsedTime = newtime - start;
-      if (elapsedTime > 1500) {
+      if (elapsedTime > 2500) {
         silenceCallback();
       }
     };
@@ -132,7 +132,7 @@
     };
 
     var analyser = source.context.createAnalyser();
-    analyser.minDecibels = -90;
+    analyser.minDecibels = -80;
     analyser.maxDecibels = -10;
     analyser.smoothingTimeConstant = 0.85;
 

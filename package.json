@@ -28,7 +28,7 @@
     "colors": "^1.1.2",
     "express": "^4.16.1",
     "firebase": "^4.5.1",
-    "firebase-admin": "^5.4.2",
+    "firebase-admin": "^7.0.0",
     "fs": "0.0.1-security",
     "jquery": "^3.2.1",
     "net": "^1.0.2",
